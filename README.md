@@ -1,6 +1,6 @@
 # CredHive
 
-App created as a part of the [CredHive](https://credhive.com/) interview process.
+App created as a part of the [CredHive](https://credhive.com/) task.
 
 ## Deployed Application
 
