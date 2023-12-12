@@ -12,7 +12,7 @@ export default function CompanyInformationCard(props: CompanyInformationCardProp
 
   const toggleModal = () => setModalOpen(!isModalOpen);
 
-  const renderFinancialRow = (label, value) => (
+  const renderFinancialRow = (label: any, value: any) => (
     <tr>
       <td className="px-4 py-2 border">{label}</td>
       <td className="px-4 py-2 border">{value}</td>
