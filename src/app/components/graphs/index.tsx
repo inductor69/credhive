@@ -1,6 +1,7 @@
-import React from 'react';
+"use-client";
+import React, { useEffect, useState } from 'react';
 //@ts-ignore
-import HeatMap from 'react-heatmap-grid';
+// import HeatMap from 'react-heatmap-grid';
 import styles from './graphs.module.css';
 import { CompanyInformation } from "@/app/types";
 
@@ -9,6 +10,16 @@ type GraphsComponentProps = {
 };
 
 export default function Graphs(props: GraphsComponentProps) {
+  const [HeatMap, setHeatMap] = useState<any>(null); // State to store the dynamically imported HeatMap
+
+  useEffect(() => {
+    const loadHeatMap = async () => {
+      //@ts-ignore
+      const HeatMapModule = await import('react-heatmap-grid');
+      setHeatMap(() => HeatMapModule.default); // Set the imported HeatMap component
+    };
+    loadHeatMap();
+  }, []);
   // Sort companies by net profit in descending order
   const sortedCompanies = [...props.companies].sort((a, b) => b.netProfit - a.netProfit);
 
@@ -31,17 +42,10 @@ export default function Graphs(props: GraphsComponentProps) {
     const ratio = (value - minNetProfit) / (maxNetProfit - minNetProfit);
     return `rgb(${255 * (1 - ratio)}, ${255 * ratio}, 0)`; // Red to Green
   };
-
-  return (
-    <>
-      <div className="flex justify-center items-center ">
-        <div className="text-center text-xl mt-4">Heat Map</div>
-      </div>
-
-      <div className={styles.graphGridContainer}>
-        {groupedCompanies.map((group, index) => (
-          <div key={index} className={styles.heatmapRow}>
-            <HeatMap
+  const HeatMapComponent = HeatMap ? (
+    groupedCompanies.map((group, index) => (
+      <div key={index} className={styles.heatmapRow}>
+        <HeatMap
               xLabels={group.map(company => company.companyName)}
               yLabels={['Net Profit']}
               data={[group.map(company => company.netProfit)]}
@@ -55,8 +59,20 @@ export default function Graphs(props: GraphsComponentProps) {
               })}
               cellRender={(value: { toLocaleString: () => any; }) => <b>{formatNetProfit(value)}</b>}
             />
-          </div>
-        ))}
+      </div>
+    ))
+  ) : (
+    <div>Loading HeatMap...</div>
+  );
+
+  return (
+    <>
+      <div className="flex justify-center items-center ">
+        <div className="text-center text-xl mt-4">Heat Map</div>
+      </div>
+
+      <div className={styles.graphGridContainer}>
+        {HeatMapComponent}
       </div>
     </>
   );
