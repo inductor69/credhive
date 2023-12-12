@@ -85,7 +85,7 @@ export default function Login() {
                 className="input-group-text text-bg-dark"
                 htmlFor="username-input"
               >
-                Username
+                Username (test)
               </label>
               <input
                 type="text"
@@ -106,7 +106,7 @@ export default function Login() {
                 className="input-group-text text-bg-dark"
                 htmlFor="password-input"
               >
-                Password
+                Password (test)
               </label>
               <input
                 type="password"
