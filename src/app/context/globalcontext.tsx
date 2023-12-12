@@ -18,7 +18,7 @@ export const useGlobalContext = () => {
   return context;
 };
 
-export const GlobalProvider: React.FC = ({ children }) => {
+export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [allCompaniesInformation, setAllCompaniesInformation] = useState<CompanyInformation[]>([]);
 
   return (

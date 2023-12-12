@@ -10,7 +10,7 @@ import Header from '@/app/components/header';
 
 export default function Graph() {
   const { allCompaniesInformation, setAllCompaniesInformation } = useGlobalContext();
-  const numCompanies = parseInt(process.env.NEXT_PUBLIC_NUMBER_OF_COMPANIES) || 50;
+  const numCompanies = parseInt(process.env.NEXT_PUBLIC_NUMBER_OF_COMPANIES ?? "50", 10) || 50;
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
